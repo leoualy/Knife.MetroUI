@@ -1,0 +1,161 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Knife.MetroUI"
+    xmlns:localConverter="clr-namespace:Knife.MetroUI.Converters">
+
+    <!--MetroWindow-->
+    <ControlTemplate x:Key="MetroWindow.Template" TargetType="local:MetroWindow">
+        <Border Background="{TemplateBinding Background}">
+            <Grid>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{TemplateBinding Dialog}"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:MetroWindow}">
+        <Setter Property="Template" Value="{StaticResource MetroWindow.Template}"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="Background" Value="White"/>
+    </Style>
+    <!--MetroWindow-->
+
+    <!--BaseMetroDialog-->
+    <localConverter:ModalSetConverter x:Key="ModalSetConverter"/>
+    <Style x:Key="Style.MetroBorder" TargetType="Border">
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Opacity" Value="0.45"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <ControlTemplate x:Key="MetroDialog.Template" TargetType="local:BaseMetroDialog">
+        <Grid Width="2560" Height="1080">
+            <Border 
+                Style="{StaticResource Style.MetroBorder}"
+                Visibility="{TemplateBinding IsModality,
+                Converter={StaticResource ModalSetConverter}}">
+            </Border>
+
+            <ContentPresenter
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+        </Grid>
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:BaseMetroDialog}">
+        <Setter Property="Template" Value="{StaticResource MetroDialog.Template}"/>
+    </Style>
+    <!--BaseMetroDialog-->
+
+    <!--MetroMessageBox-->
+    <Style TargetType="{x:Type local:MetroMessageBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MetroMessageBox}">
+                    <Border Background="{TemplateBinding Background}" 
+                           Width="{TemplateBinding DialogWidth}" Height="{TemplateBinding DialogHeight}">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding MsgContent}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="White"/>
+    </Style>
+    <!--MetroMessageBox-->
+
+    
+    <!--ButtonRound-->
+    <localConverter:ScaleCenterConverter x:Key="ScaleCenterConverter"/>
+    <ControlTemplate x:Key="ButtonRound.Template" 
+                     TargetType="{x:Type local:ButtonRound}">
+        <Border Name="border"
+            Width="{TemplateBinding Width}" 
+            Height="{TemplateBinding Height}"
+            CornerRadius="{TemplateBinding RCornerRadius}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="ScaleBorder" 
+                                    CenterX="{Binding ElementName=border,
+                        Path=Width,Converter={StaticResource ScaleCenterConverter}}" 
+                                    CenterY="{Binding ElementName=border,
+                        Path=Height,Converter={StaticResource ScaleCenterConverter}}" />
+                </TransformGroup>
+            </Border.RenderTransform>
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        </Border>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="TouchDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                                        From="0.9"
+                                        To="1"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="ScaleBorder"
+                                        Storyboard.TargetProperty="ScaleX"/>
+                        <DoubleAnimation
+                                        From="0.9"
+                                        To="1"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="ScaleBorder"
+                                        Storyboard.TargetProperty="ScaleY"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" Value="1"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:ButtonRound }">
+        <Setter Property="Template" Value="{StaticResource ButtonRound.Template}"/>
+    </Style>
+    <!--ButtonRound-->
+
+    <!--MetroTextBox-->
+    <ControlTemplate x:Key="MetroTextBox.Template" 
+                     TargetType="{x:Type local:MetroTextBox}">
+        <Grid>
+            <Border 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Width="{TemplateBinding Width}"
+                Height="{TemplateBinding Height}">
+                
+                <ScrollViewer x:Name="PART_ContentHost"
+                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                    VerticalAlignment="Bottom"/>
+            </Border>
+            <TextBlock Name="txtWater"
+                       Visibility="Collapsed"
+                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                       VerticalAlignment="Bottom"
+                       Text="{TemplateBinding WaterMark}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value=""/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="txtWater" Property="Visibility" Value="Visible"/>
+            </MultiDataTrigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="txtWater" Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:MetroTextBox}">
+        <Setter Property="Template" Value="{StaticResource MetroTextBox.Template}"/>
+    </Style>
+    <!--MetroTextBox-->
+
+
+
+</ResourceDictionary>
