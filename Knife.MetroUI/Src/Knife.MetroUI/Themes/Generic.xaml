@@ -63,6 +63,73 @@
     <!--MetroMessageBox-->
 
     
+    <ControlTemplate x:Key="MetroTabControl.Template" 
+                     TargetType="{x:Type local:MetroTabControl}">
+        <Grid x:Name="templateRoot" ClipToBounds="true">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ColumnDefinition0" Width="270"/>
+                <ColumnDefinition x:Name="ColumnDefinition1" Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="RowDefinition0" Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" CornerRadius="60">
+                <StackPanel x:Name="headerPanel" Grid.RowSpan="2" Grid.Column="0" IsItemsHost="true"/>
+            </Border>
+            <Border CornerRadius="0,32,32,0" x:Name="contentPanel" Background="{TemplateBinding Background}" Grid.Column="1">
+                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"/>
+            </Border>
+        </Grid>
+
+
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:MetroTabControl}">
+        <Setter Property="Template" Value="{StaticResource MetroTabControl.Template}"/>
+    </Style>
+    
+    
+
+    
+    
+
+    <!--MetroTextBox-->
+    <ControlTemplate x:Key="MetroTextBox.Template" 
+                     TargetType="{x:Type local:MetroTextBox}">
+        <Grid>
+            <Border 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Width="{TemplateBinding Width}"
+                Height="{TemplateBinding Height}">
+                
+                <ScrollViewer x:Name="PART_ContentHost"
+                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                    VerticalAlignment="Bottom"/>
+            </Border>
+            <TextBlock Name="txtWater"
+                       Visibility="Collapsed"
+                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                       VerticalAlignment="Bottom"
+                       Text="{TemplateBinding WaterMark}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value=""/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="txtWater" Property="Visibility" Value="Visible"/>
+            </MultiDataTrigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="txtWater" Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+    <Style TargetType="{x:Type local:MetroTextBox}">
+        <Setter Property="Template" Value="{StaticResource MetroTextBox.Template}"/>
+    </Style>
+    <!--MetroTextBox-->
+
     <!--ButtonRound-->
     <localConverter:ScaleCenterConverter x:Key="ScaleCenterConverter"/>
     <ControlTemplate x:Key="ButtonRound.Template" 
@@ -117,44 +184,38 @@
         <Setter Property="Template" Value="{StaticResource ButtonRound.Template}"/>
     </Style>
     <!--ButtonRound-->
-
-    <!--MetroTextBox-->
-    <ControlTemplate x:Key="MetroTextBox.Template" 
-                     TargetType="{x:Type local:MetroTextBox}">
-        <Grid>
-            <Border 
-                BorderBrush="{TemplateBinding BorderBrush}" 
-                BorderThickness="{TemplateBinding BorderThickness}"
+    
+    <!--ButtonTile-->
+    <ControlTemplate x:Key="ButtonTile.Template" TargetType="{x:Type local:ButtonTile}">
+        <Border x:Name="border" BorderThickness="2"
+                Background="{TemplateBinding Background}"
                 Width="{TemplateBinding Width}"
                 Height="{TemplateBinding Height}">
-                
-                <ScrollViewer x:Name="PART_ContentHost"
-                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
-                    VerticalAlignment="Bottom"/>
-            </Border>
-            <TextBlock Name="txtWater"
-                       Visibility="Collapsed"
-                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
-                       VerticalAlignment="Bottom"
-                       Text="{TemplateBinding WaterMark}"/>
-        </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="20,0,0,20"
+                           Text="{TemplateBinding Content}"
+                           FontSize="{TemplateBinding FontSize}"
+                           Foreground="{TemplateBinding Foreground}"
+                           />
+            </Grid>
+        </Border>
         <ControlTemplate.Triggers>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value=""/>
-                </MultiDataTrigger.Conditions>
-                <Setter TargetName="txtWater" Property="Visibility" Value="Visible"/>
-            </MultiDataTrigger>
-            <Trigger Property="IsFocused" Value="True">
-                <Setter TargetName="txtWater" Property="Visibility" Value="Collapsed"/>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                <Setter Property="Opacity" Value="0.8"/>
             </Trigger>
         </ControlTemplate.Triggers>
-
     </ControlTemplate>
-    <Style TargetType="{x:Type local:MetroTextBox}">
-        <Setter Property="Template" Value="{StaticResource MetroTextBox.Template}"/>
+    <Style TargetType="{x:Type local:ButtonTile}">
+        <Setter Property="Template" Value="{StaticResource ButtonTile.Template}"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
-    <!--MetroTextBox-->
+    <!--ButtonTile-->
+    
 
 
 
