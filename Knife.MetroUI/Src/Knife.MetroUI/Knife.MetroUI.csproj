@@ -53,8 +53,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button\ButtonRound.cs" />
-    <Compile Include="Button\ButtonTile.cs" />
+    <Compile Include="Controls\MetroButton.cs" />
+    <Compile Include="Controls\MetroComboBox.cs" />
+    <Compile Include="Controls\MetroScrollViewer.cs" />
     <Compile Include="Controls\MetroTextBox.cs" />
     <Compile Include="Converters\ModalSetConverter.cs" />
     <Compile Include="Converters\ScaleCenterConverter.cs" />

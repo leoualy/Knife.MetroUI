@@ -112,13 +112,18 @@
             <TabControl Grid.Row="1" Height="678">
                 <TabItem Header="按钮展示">
                     <Grid Background="#EDEDED">
-                        <Knife:ButtonTile Width="120" Height="60" Background="#218868">磁贴</Knife:ButtonTile>
+                        <Knife:MetroButton Width="120" Height="60" Background="#218868" Click="btnClick" MCornerRadius="12" MouseOverBackground="Yellow"
+                                           BorderThickness="2" BorderBrush="SteelBlue" MouseOverBorderBrush="Red"
+                                           >磁贴</Knife:MetroButton>
                     </Grid>
                    
                 </TabItem>
                 <TabItem Header="编辑框展示">
                     <Grid>
-                       
+                        <Knife:MetroComboBox Margin="10,180,0,0" Width="120" Height="40" VerticalContentAlignment="Center">
+                            <TextBlock>1</TextBlock>
+                            <TextBlock>2</TextBlock>
+                        </Knife:MetroComboBox>
                         <Knife:MetroTextBox Width="120" Height="60" WaterMark="水印"
                                         BorderThickness="0,0,0,2" BorderBrush="#458B74"
                                         
@@ -128,6 +133,7 @@
                                         
                                         ></Knife:MetroTextBox>
                         
+
                     </Grid>
                     
                 </TabItem>

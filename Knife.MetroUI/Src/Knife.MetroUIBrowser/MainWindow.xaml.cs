@@ -24,5 +24,10 @@ namespace Knife.MetroUIBrowser
         {
             InitializeComponent();
         }
+
+        private void btnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("hell0");
+        }
     }
 }
